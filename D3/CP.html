@@ -61,7 +61,7 @@ var tooltip = d3.select("body")
 	.style("position", "absolute")
 	.style("visibility", "hidden")  
 
-d3.json("colony_result.json", function(error, root) {
+d3.json("daten.json", function(error, root) {
   if (error) throw error;
 
   root = d3.hierarchy(root)
