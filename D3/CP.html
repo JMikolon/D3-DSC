@@ -1,13 +1,18 @@
 <html>
 <meta charset="utf-8">
+<head>
+    <p>IBM Prototype: Circle Packing</p>
+    <p style="font-size:50%;">@Developers: Jan Mikolon, Paul Liepe, Lennart Schwung, Samantha Butz, Sebastian Kraus</p>
+</head>
 <style>
 
 .node {
+  fill: #aaaaaa;  
   cursor: pointer;
 }
 
 .node:hover {
-  stroke: #3f3f3f;
+  stroke: #8b0000;
   stroke-width: 4.5px;
 }
 
@@ -16,7 +21,7 @@
 }
 
 .label {
-  font: 15px "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font: 50px "Helvetica Neue", Helvetica, Arial, sans-serif;
   text-anchor: middle;
   text-shadow: 0 1px 0 #fff, 1px 0 0 #fff, -1px 0 0 #fff, 0 -1px 0 #fff;
 }
@@ -28,38 +33,55 @@
 }
   
 #graphic {
-    background-color: #ccc;
-}  
+    background-color: rgb(34, 33, 33);
+}
+.svg-container {
+    display: inline-block;
+    position: relative;
+    width: 100%;
+    padding-bottom: 100%;
+    vertical-align: top;
+    overflow: hidden;
+}
+.svg-content {
+    display: inline-block;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+  
 
 </style>
 <svg width="960" height="960"></svg>
-<script src="https://d3js.org/d3.v5.min.js"></script>
+<script src="https://d3js.org/d3.v4.min.js"></script>
 <script>
 
-// var container = d3.select("#container");
-// var svg = container.append('svg')
-//     .attr('id', 'graphic')
-//     .attr('viewBox', "0, 0, " + width + ", " + height)  // min-x, min-y, width, height
-//     .attr('preserveAspectRatio', "xMinYMid");
   
 var svg = d3.select("svg"),
-    margin = 200,
-    diameter = svg.attr("width"),
-    g = svg.append("g").attr("transform", "translate(" + diameter / 2 + "," + diameter / 2 + ")");
+    margin = 400,
+    durchmesser = svg.attr("width"),
+    g = svg.append("g").attr("transform", "translate(" + durchmesser / 2 + "," + durchmesser / 2 + ")");
 
 var color = d3.scaleLinear()
-    .domain([-1, 5])
-    .range(["hsl(152,80%,80%)", "hsl(228,30%,40%)"])
+    .range(["#eeeeee","#aabbbb","#aa9999", "#9999AA", "#b5a9c9"])
     .interpolate(d3.interpolateHcl);
 
 var pack = d3.pack()
-    .size([diameter, diameter])
+    .size([durchmesser, durchmesser])
     .padding(2);
+
+
   
 var tooltip = d3.select("body")
 	.append("div")
 	.style("position", "absolute")
-	.style("visibility", "hidden")  
+    .style("visibility", "hidden")
+
+var chart = d3.select("body")
+	.append("div")
+	.style("position", "absolute")
+    .style("visibility", "hidden")
+
 
 d3.json("daten.json", function(error, root) {
   if (error) throw error;
@@ -71,7 +93,7 @@ d3.json("daten.json", function(error, root) {
   var focus = root,
       nodes = pack(root).descendants();
 //       view;
-
+// Zeichnen der Circles
   var circle = g.selectAll("circle")
     .data(nodes)
     .enter().append("circle")
@@ -79,17 +101,18 @@ d3.json("daten.json", function(error, root) {
       .style("fill", function(d) { return d.children ? color(d.depth) : null; })
       .on("click", function(d) { if (focus !== d) zoom(d), d3.event.stopPropagation(); })
   		.on("mouseover", function(d){return tooltip.text(d.data.name).style("visibility", "visible");})
-			.on("mousemove", function(d){return !d.children ? tooltip.style("top", (event.pageY-10)+"px").style("left",(event.pageX+10)+"px") : tooltip.style("top", "50px").style("left","50px");})
-			.on("mouseout", function(){return tooltip.style("visibility", "hidden");});
+			.on("mousemove", function(d){return !d.children ? tooltip.style("top", (event.pageY-10)+"px").style("right",(event.pageX+10)+"px") : tooltip.style("top", "200px").style("right","300px");})
+            .on("mouseout", function(){return tooltip.style("visibility", "hidden");});
 
-
-//   var text = g.selectAll("text")
-//     .data(nodes)
-//     .enter().append("text")
-//       .attr("class", "label")
-//       .style("fill-opacity", function(d) { return d.parent === root ? 1 : 0; })
-//       .style("display", function(d) { return d.parent === root ? "inline" : "none"; })
-//       .text(function(d) { return d.data.name; });
+// Hier die Beschriftungen der Circles
+  var text = g.selectAll("text")
+    .data(nodes)
+    .enter().append("text")
+      .attr("class", "label")
+      .style("fill-opacity", function(d) { return d.parent === root ? 1 : 0; })
+      .style("display", function(d) { return d.parent === root ? "inline" : "none"; })
+      .text(function(d) { return d.data.name; })
+      .transition().duration(4000).style("font-size","19px");
 
   var node = g.selectAll("circle,text");
 
@@ -103,7 +126,7 @@ d3.json("daten.json", function(error, root) {
     var focus0 = focus; focus = d;
 
     var transition = d3.transition()
-        .duration(d3.event.altKey ? 7500 : 750)
+        .duration(d3.event.altKey ? 1 : 100)
         .tween("zoom", function(d) {
           var i = d3.interpolateZoom(view, [focus.x, focus.y, focus.r * 2 + margin]);
           return function(t) { zoomTo(i(t)); };
@@ -115,9 +138,10 @@ d3.json("daten.json", function(error, root) {
         .on("start", function(d) { if (d.parent === focus) this.style.display = "inline"; })
         .on("end", function(d) { if (d.parent !== focus) this.style.display = "none"; });
   }
+  
 
   function zoomTo(v) {
-    var k = diameter / v[2]; view = v;
+    var k = durchmesser / v[2]; view = v;
     node.attr("transform", function(d) { return "translate(" + (d.x - v[0]) * k + "," + (d.y - v[1]) * k + ")"; });
     circle.attr("r", function(d) { return d.r * k; });
   }
