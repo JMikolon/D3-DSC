@@ -2,12 +2,12 @@
 <meta charset="utf-8">
 <head>
     <p>IBM Prototype: Circle Packing</p>
-    <p style="font-size:50%;">@Developers: Jan Mikolon, Paul Liepe, Lennart Schwung, Samantha Butz, Sebastian Kraus</p>
+    <p style="font-size:50%;">@Developers:  Jan Mikolon, Paul Liepe, Lennart Schwung, Samantha Butz, Sebastian Kraus</p>
 </head>
 <style>
 
 .node {
-  fill: #aaaaaa;  
+  fill: #050505;  
   cursor: pointer;
 }
 
@@ -33,7 +33,7 @@
 }
   
 #graphic {
-    background-color: rgb(34, 33, 33);
+    background-color: rgb(5, 5, 5);
 }
 .svg-container {
     display: inline-block;
@@ -95,17 +95,21 @@ d3.json("daten.json", function(error, root) {
 //       view;
 var PointColors = ['white','magenta']
 
-
+var prevElem, prevColour;
 // Zeichnen der Circles
   var circle = g.selectAll("circle")
     .data(nodes)
     .enter().append("circle")
       .attr("class", function(d) { return d.parent ? d.children ? "node" : "node node--leaf" : "node node--root"; })
       .style("fill", function(d) { return d.children ? color(d.depth) : null; })
+      //.style("stroke", "#808080")
 
       //.on("click", function(){d3.select(this).style("fill", "magenta"),d3.event.stopPropagation();});
-    //.on("click", function(d) { if (focus !== d) zoom(d), d3.event.stopPropagation(), d3.select(this).style("fill", "magenta")})
-    .on("click", function(d) { if (focus !== d) zoom(d), d3.event.stopPropagation()})
+    //.on("click", function(d) { if (focus !== d) zoom(d), d3.event.stopPropagation()})
+    .on("click", function(d) { if (focus !== d) zoom(d), d3.event.stopPropagation();if(prevElem){prevElem.style("fill", prevColour);};
+      prevElem = d3.select(this);
+      prevColour = d3.select(this).style("fill");
+      d3.select(this).style("fill", "#8b0000"),d3.event.stopPropagation();})
         .on("mouseover", function(d){return tooltip.text(d.data.name).style("visibility", "visible");})
 		.on("mousemove", function(d){return !d.children ? tooltip.style("top", (event.pageY-10)+"px").style("right",(event.pageX+10)+"px") : tooltip.style("top", "200px").style("right","300px");})
         .on("mouseout", function(){return tooltip.style("visibility", "hidden");});
@@ -124,7 +128,10 @@ var PointColors = ['white','magenta']
 
   svg
       .style("background", color(-1))
-      .on("click", function() { zoom(root); });
+      .on("click", function() { zoom(root); if(prevElem){prevElem.style("fill", prevColour);};
+      prevElem = d3.select(this);
+      prevColour = d3.select(this).style("fill");
+      d3.select(this).style("fill", "black"),d3.event.stopPropagation()});
 
   zoomTo([root.x, root.y, root.r * 2 + margin]);
 
