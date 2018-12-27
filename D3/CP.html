@@ -2,7 +2,6 @@
 <meta charset="utf-8">
 <head>
     <p>IBM Prototype: Circle Packing</p>
-    <p style="font-size:50%;">@Developers:  Jan Mikolon, Paul Liepe, Lennart Schwung, Samantha Butz, Sebastian Kraus</p>
 </head>
 <style>
 
@@ -58,7 +57,7 @@
 
   
 var svg = d3.select("svg"),
-    margin = 400,
+    margin = 200,
     durchmesser = svg.attr("width"),
     g = svg.append("g").attr("transform", "translate(" + durchmesser / 2 + "," + durchmesser / 2 + ")");
 
@@ -139,7 +138,7 @@ var prevElem, prevColour;
     var focus0 = focus; focus = d;
 
     var transition = d3.transition()
-        .duration(d3.event.altKey ? 1 : 50)
+        .duration(d3.event.altKey ? 1 : 5)
         .tween("zoom", function(d) {
           var i = d3.interpolateZoom(view, [focus.x, focus.y, focus.r * 2 + margin]);
           return function(t) { zoomTo(i(t)); };
