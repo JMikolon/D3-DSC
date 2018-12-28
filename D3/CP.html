@@ -62,7 +62,7 @@ var svg = d3.select("svg"),
     g = svg.append("g").attr("transform", "translate(" + durchmesser / 2 + "," + durchmesser / 2 + ")");
 
 var color = d3.scaleLinear()
-    .range(["#eeeeee","#aabbbb","#aa9999", "#9999AA", "#b5a9c9"])
+    .range(["#d6d6d6","#aabbbb","#aa9999", "#9999AA", "#b5a9c9"])
     .interpolate(d3.interpolateHcl);
 
 var pack = d3.pack()
@@ -112,11 +112,11 @@ var prevElem, prevColour;
     //.on("click", function(d) { if (focus !== d) zoom(d), d3.event.stopPropagation()})
     .on("dblclick", function(){zoom(root);if(prevElem){prevElem.style("fill", prevColour);};
       prevElem = d3.select(this);
-      prevColour = d3.select(this).style("fill"), window.getSelection().removeAllRanges()})
+      prevColour = d3.select(this).style("fill"),window.getSelection().removeAllRanges();removeElement()})
     .on("click", function(d) { if (focus !== d) zoom(d), d3.event.stopPropagation();if(prevElem){prevElem.style("fill", prevColour);};
       prevElem = d3.select(this);
       prevColour = d3.select(this).style("fill");
-      d3.select(this).style("fill", "#8b0000"),d3.event.stopPropagation();})
+      d3.select(this).style("fill", "#8b0000"),d3.event.stopPropagation()})
         .on("mouseover", function(d){return tooltip.text(d.data.name).style("visibility", "visible");})
 		.on("mousemove", function(d){return !d.children ? tooltip.style("top", (event.pageY-10)+"px").style("right",(event.pageX+10)+"px") : tooltip.style("top", "200px").style("right","300px");})
         .on("mouseout", function(){return tooltip.style("visibility", "hidden");});
@@ -129,7 +129,8 @@ var prevElem, prevColour;
       .style("fill-opacity", function(d) { return d.parent === root ? 1 : 0; })
       .style("display", function(d) { return d.parent === root ? "inline" : "none"; })
       .text(function(d) { return d.data.name; })
-      .transition().duration(4000).style("font-size","19px");
+      .transition().duration(4000).style("font-size","19px")
+      ;
 
   var node = g.selectAll("circle,text");
 
@@ -166,6 +167,24 @@ var prevElem, prevColour;
     circle.transition().duration(1000).attr("r", function(d) { return d.r * k; });
   }
 });
+
+// Hier die neue Visualisierung
+second_viz();
+function second_viz(){
+  //d3.select(container).remove()
+  var i = 2
+  var svgContainer = d3.select("body").append("svg")
+                      .attr("width", 800 + i)
+                      .attr("class", "container")
+                      .attr("height", 900);
+  var circle_2 = svgContainer.append("circle").attr("cx", 600).attr("class", "container_1").attr("cy", 200).attr("r", 20);
+
+}
+removeElement(); 
+  function removeElement() {
+    // need to remove this object from data
+    d3.selectAll('circle.container_1').remove();
+  }
 
 
 </script>
