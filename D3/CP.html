@@ -101,7 +101,7 @@ var prevElem, prevColour;
     .enter().append("circle")
       .attr("class", function(d) { return d.parent ? d.children ? "node" : "node node--leaf" : "node node--root"; })
       .attr("align","center")
-      .style("fill", function(d,i) { return d.children ? color(d.depth) : null; if (d.size >= 2000) {return "red"}})
+      .style("fill", function(d) { return d.children ? color(d.depth) : null; if (d.size >= 2000) {return "red"}})
       //.style("stroke", "#808080")
 
 
@@ -112,7 +112,7 @@ var prevElem, prevColour;
     //.on("click", function(d) { if (focus !== d) zoom(d), d3.event.stopPropagation()})
     .on("dblclick", function(){zoom(root);if(prevElem){prevElem.style("fill", prevColour);};
       prevElem = d3.select(this);
-      prevColour = d3.select(this).style("fill")})
+      prevColour = d3.select(this).style("fill"), window.getSelection().removeAllRanges()})
     .on("click", function(d) { if (focus !== d) zoom(d), d3.event.stopPropagation();if(prevElem){prevElem.style("fill", prevColour);};
       prevElem = d3.select(this);
       prevColour = d3.select(this).style("fill");
