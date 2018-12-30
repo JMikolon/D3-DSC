@@ -62,7 +62,7 @@ var svg = d3.select("svg"),
     g = svg.append("g").attr("transform", "translate(" + durchmesser / 2 + "," + durchmesser / 2 + ")");
 
 var color = d3.scaleLinear()
-    .range(["#d6d6d6","#aabbbb","#aa9999", "#9999AA", "#b5a9c9"])
+    .range(["#e4e4e4","#aabbbb","#aa9999", "#9999AA", "#b5a9c9"])
     .interpolate(d3.interpolateHcl);
 
 var pack = d3.pack()
@@ -112,11 +112,11 @@ var prevElem, prevColour;
     //.on("click", function(d) { if (focus !== d) zoom(d), d3.event.stopPropagation()})
     .on("dblclick", function(){zoom(root);if(prevElem){prevElem.style("fill", prevColour);};
       prevElem = d3.select(this);
-      prevColour = d3.select(this).style("fill"),window.getSelection().removeAllRanges();removeElement()})
+      prevColour = d3.select(this).style("fill"),window.getSelection().removeAllRanges()})
     .on("click", function(d) { if (focus !== d) zoom(d), d3.event.stopPropagation();if(prevElem){prevElem.style("fill", prevColour);};
       prevElem = d3.select(this);
       prevColour = d3.select(this).style("fill");
-      d3.select(this).style("fill", "#8b0000"),d3.event.stopPropagation()})
+      d3.select(this).style("fill", "#8b0000"),d3.event.stopPropagation();second_viz()})
         .on("mouseover", function(d){return tooltip.text(d.data.name).style("visibility", "visible");})
 		.on("mousemove", function(d){return !d.children ? tooltip.style("top", (event.pageY-10)+"px").style("right",(event.pageX+10)+"px") : tooltip.style("top", "200px").style("right","300px");})
         .on("mouseout", function(){return tooltip.style("visibility", "hidden");});
@@ -177,15 +177,23 @@ function second_viz(){
                       .attr("width", 800 + i)
                       .attr("class", "container")
                       .attr("height", 900);
-  var circle_2 = svgContainer.append("circle").attr("cx", 600).attr("class", "container_1").attr("cy", 200).attr("r", 20);
 
+
+  var circle_2 = svgContainer.append("circle").attr("cx", 600).attr("class", "container_1").attr("id", "Sec_viz").attr("cy", 200).attr("r", 20);
+  var active   = Sec_viz.active ? false : true,
+
+
+       newOpacity = active ? 0 : 1;
+
+       d3.select("#Sec_viz").style("opacity", newOpacity);
+       Sec_viz.active = active;
 }
-removeElement(); 
-  function removeElement() {
-    // need to remove this object from data
-    d3.selectAll('circle.container_1').remove();
+
+function click() {
+  if(d3.select(this).attr("class") == "node") {
+    window.alert("getroffen");
   }
-
-
+}
+//circle.node.node--leaf
 </script>
 </html>
