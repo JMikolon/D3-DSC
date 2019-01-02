@@ -90,7 +90,7 @@ buttons.append("text")
   
     var k = this.alpha() * 0.3;
   
-    // nudge nodes to proper foci:
+
     if(current == "groupA" ) {
       nodes.forEach(function(n, i) {
         n.y += (fociA[n.groupA].y - n.y) * k;
