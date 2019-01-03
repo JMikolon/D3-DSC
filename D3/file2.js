@@ -3,10 +3,16 @@ function alertOne(){
    
 }
 
+function delete_viz(){
+    d3.select("#the_SVG_ID").remove()
+}
+
+
 function run_cluster(){
+    //delete_viz()
     var width = 600,
-    height = 400,
-    margin = 300,
+    height = 900,
+    margin = 100,
     padding = 1, 
     radius = 6;
 
@@ -46,7 +52,9 @@ var force = d3.forceSimulation()
   
 var svg = d3.select("body").append("svg")
     .attr("width", width)
-    .attr("height", height);
+    .attr("height", height)
+    .attr("id","the_SVG_ID")
+    ;
 
 var node = svg.selectAll("circle")
     .data(nodes)

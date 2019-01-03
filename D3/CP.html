@@ -40,14 +40,14 @@
   
 
 </style>
-<svg width="960" height="100%"></svg>
+<svg width="960" height="960" viewBox="0 0 960 960" preserveAspectRatio="xMidYMid meet"></svg>
 <script language="javascript" type="text/javascript" src="file2.js"></script>
 <script src="https://d3js.org/d3.v4.min.js"></script>
 <script>
 
 
 var svg = d3.select("svg"),
-    margin = 300,
+    margin = 200,
     durchmesser = svg.attr("width"),
     g = svg.append("g").attr("transform", "translate(" + durchmesser / 2 + "," + durchmesser / 2 + ")");
 
@@ -94,13 +94,20 @@ var prevElem, prevColour;
       .style("fill", function(d) { return d.children ? color(d.depth) : null; if (d.size >= 2000) {return "red"}})
       //.style("stroke", "#808080")
 
+
     .on("dblclick", function(){zoom(root);if(prevElem){prevElem.style("fill", prevColour);};
       prevElem = d3.select(this);
-      prevColour = d3.select(this).style("fill"),window.getSelection().removeAllRanges()})
+      prevColour = d3.select(this).style("fill"),window.getSelection().removeAllRanges();remove_viz_from_file2()})
     .on("click", function(d) { if (focus !== d) zoom(d), d3.event.stopPropagation();if(prevElem){prevElem.style("fill", prevColour);};
       prevElem = d3.select(this);
       prevColour = d3.select(this).style("fill");
-      d3.select(this).style("fill", "#8b0000"),d3.event.stopPropagation();if(d3.select(this).attr('class')=="node node--leaf"){check_class_node_leaf()};})
+      d3.select(this).style("fill", "#8b0000"),d3.event.stopPropagation();
+      
+      if(d3.select(this).attr('class')=="node node--leaf" && (d3.select("#the_SVG_ID")== null)) {check_class_node_leaf()};
+      if(d3.select(this).attr('class')=="node node--leaf" && (d3.select("#the_SVG_ID")!= null)) {remove_viz_from_file2(), check_class_node_leaf()}
+      })
+
+
         .on("mouseover", function(d){return tooltip.text(d.data.name).style("visibility", "visible");})
 		    .on("mousemove", function(d){return !d.children ? tooltip.style("top", (event.pageY-10)+"px").style("right",(event.pageX+10)+"px") : tooltip.style("top", "200px").style("right","300px");})
         .on("mouseout", function(){return tooltip.style("visibility", "hidden");});
@@ -156,48 +163,13 @@ var prevElem, prevColour;
 function check_class_node_leaf(){
   console.log('jo klappt')
 
-  // File2.js
+  // File2.js --> run alert
   alertOne()
   run_cluster()
-
+}
+function remove_viz_from_file2(){
+  delete_viz()
 
 }
-
-//.style("border", "1px solid black")
-
-// Hier die neue Visualisierung
-//second_viz();
-function second_viz(){
-  //d3.select(container).remove()
-var margin = {top: 100, right: 50, bottom: 0, left: 100};
-var width = 600,
-    height = 500;
-
-var svgContainer = d3.select("body").append("svg")
-                                          .attr('width', width - margin.left - margin.right)
-                                          .attr('height', height - margin.top - margin.bottom)
-                                          .attr("class", "container_1")
-                                          .attr("transform", "translate(100, -300)");
-
-var second_viz = svgContainer.append("circle").attr("cx", 100).attr("class", "container_1").attr("cy", 100).attr("r", 20);
-var active   = second_viz.active ? false : true,
-
-
-newOpacity = active ? 0 : 1;
-
-d3.select("second_viz").style("opacity", newOpacity);
-second_viz.active = active;
-
-
-
-};
-
-
-//function click() {
- // if(d3.select(this).attr("class") == "node") {
-   // window.alert("getroffen");
- // }
-//}
-//circle.node.node--leaf
 </script>
 </html>
