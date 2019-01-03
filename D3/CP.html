@@ -33,18 +33,14 @@
 #graphic {
     background-color: rgb(5, 5, 5);
 }
-#chartArea {
-  width: 960px;
-  height: 960px;
-  background-color: #DDD;
-}
+
 
 
 
   
 
 </style>
-<svg width="960" height="960"></svg>
+<svg width="960" height="100%"></svg>
 <script src="https://d3js.org/d3.v4.min.js"></script>
 <script>
 
@@ -103,9 +99,9 @@ var prevElem, prevColour;
     .on("click", function(d) { if (focus !== d) zoom(d), d3.event.stopPropagation();if(prevElem){prevElem.style("fill", prevColour);};
       prevElem = d3.select(this);
       prevColour = d3.select(this).style("fill");
-      d3.select(this).style("fill", "#8b0000"),d3.event.stopPropagation();})
+      d3.select(this).style("fill", "#8b0000"),d3.event.stopPropagation();if(d3.select(this).attr('class')=="node node--leaf"){check_class_node_leaf()};})
         .on("mouseover", function(d){return tooltip.text(d.data.name).style("visibility", "visible");})
-		.on("mousemove", function(d){return !d.children ? tooltip.style("top", (event.pageY-10)+"px").style("right",(event.pageX+10)+"px") : tooltip.style("top", "200px").style("right","300px");})
+		    .on("mousemove", function(d){return !d.children ? tooltip.style("top", (event.pageY-10)+"px").style("right",(event.pageX+10)+"px") : tooltip.style("top", "200px").style("right","300px");})
         .on("mouseout", function(){return tooltip.style("visibility", "hidden");});
 
 // Hier die Beschriftungen der Circles
@@ -155,36 +151,40 @@ var prevElem, prevColour;
   }
 })
 
+// Code für Klasse Node--Leaf
+function check_class_node_leaf(){
+  console.log('jo klappt');
+}
 
-
+//.style("border", "1px solid black")
 
 // Hier die neue Visualisierung
-second_viz();
+//second_viz();
 function second_viz(){
   //d3.select(container).remove()
-  var margin = {top: 25, right: 10, bottom: 200, left: 40};
-  var width = 700 - margin.left - margin.right,
-    height = 300 - margin.top - margin.bottom;
+var margin = {top: 100, right: 50, bottom: 0, left: 100};
+var width = 600,
+    height = 500;
 
-var svgContainer = d3.select('#chartArea').append('svg')
-.attr('width', width + margin.left + margin.right)
-.attr('height', height + margin.top + margin.bottom)
-.append('g')
-.attr('transform', 'translate(' + margin.left + ', ' + margin.top + ')')
-.attr("class", "container")
-.style("border", "1px solid black");
+var svgContainer = d3.select("body").append("svg")
+                                          .attr('width', width - margin.left - margin.right)
+                                          .attr('height', height - margin.top - margin.bottom)
+                                          .attr("class", "container_1")
+                                          .attr("transform", "translate(100, -300)");
 
-
-
-  var Sec_viz = svgContainer.append("circle").attr("cx", 100).attr("class", "container_1").attr("id", "Sec_viz").attr("cy", 100).attr("r", 20);
- // var active   = Sec_viz.active ? false : true,
+var second_viz = svgContainer.append("circle").attr("cx", 100).attr("class", "container_1").attr("cy", 100).attr("r", 20);
+var active   = second_viz.active ? false : true,
 
 
-   //    newOpacity = active ? 0 : 1;
+newOpacity = active ? 0 : 1;
 
-      // d3.select("#Sec_viz").style("opacity", newOpacity);
-      // Sec_viz.active = active;
+d3.select("second_viz").style("opacity", newOpacity);
+second_viz.active = active;
+
+
+
 };
+
 
 //function click() {
  // if(d3.select(this).attr("class") == "node") {
