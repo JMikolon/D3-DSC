@@ -5,19 +5,21 @@ function alertOne(){
 
 function delete_viz(){
     d3.select("#the_SVG_ID").remove()
+    document.getElementById('toolbar').style.visibility='hidden';
 }
+
 
 
 function run_cluster(){
     //delete_viz()
-    var width = 600,
+    var width = 500,
     height = 900,
     margin = 100,
-    padding = 1, 
-    radius = 6;
+    padding = 2, 
+    radius = 8;
 
 var n = 100, 
-    m = 10; 
+    m = 5; 
 
 
 var clusters = new Array(m);

@@ -1,8 +1,8 @@
 {
-    "name": "flare",
+    "name": "Geo",
     "children": [
      {
-      "name": "analytics",
+      "name": "North America",
       "children": [
        {
         "name": "cluster",
@@ -32,37 +32,7 @@
       ]
      },
      {
-      "name": "animate",
-      "children": [
-       {"name": "Easing", "size": 17010},
-       {"name": "FunctionSequence", "size": 5842},
-       {
-        "name": "interpolate",
-        "children": [
-         {"name": "ArrayInterpolator", "size": 1983},
-         {"name": "ColorInterpolator", "size": 2047},
-         {"name": "DateInterpolator", "size": 1375},
-         {"name": "Interpolator", "size": 8746},
-         {"name": "MatrixInterpolator", "size": 2202},
-         {"name": "NumberInterpolator", "size": 1382},
-         {"name": "ObjectInterpolator", "size": 1629},
-         {"name": "PointInterpolator", "size": 1675},
-         {"name": "RectangleInterpolator", "size": 2042}
-        ]
-       },
-       {"name": "ISchedulable", "size": 1041},
-       {"name": "Parallel", "size": 5176},
-       {"name": "Pause", "size": 449},
-       {"name": "Scheduler", "size": 5593},
-       {"name": "Sequence", "size": 5534},
-       {"name": "Transition", "size": 9201},
-       {"name": "Transitioner", "size": 19975},
-       {"name": "TransitionEvent", "size": 1116},
-       {"name": "Tween", "size": 6006}
-      ]
-     },
-     {
-      "name": "data",
+      "name": "MEA",
       "children": [
        {
         "name": "converters",
@@ -83,22 +53,7 @@
       ]
      },
      {
-      "name": "display",
-      "children": [
-       {"name": "DirtySprite", "size": 8833},
-       {"name": "LineSprite", "size": 1732},
-       {"name": "RectSprite", "size": 3623},
-       {"name": "TextSprite", "size": 10066}
-      ]
-     },
-     {
-      "name": "flex",
-      "children": [
-       {"name": "FlareVis", "size": 4116}
-      ]
-     },
-     {
-      "name": "physics",
+      "name": "Greater China Group",
       "children": [
        {"name": "DragForce", "size": 1082},
        {"name": "GravityForce", "size": 1336},
@@ -111,7 +66,7 @@
       ]
      },
      {
-      "name": "query",
+      "name": "Latin America",
       "children": [
        {"name": "AggregateExpression", "size": 1616},
        {"name": "And", "size": 1027},
@@ -153,7 +108,7 @@
       ]
      },
      {
-      "name": "scale",
+      "name": "Japan",
       "children": [
        {"name": "IScaleMap", "size": 2105},
        {"name": "LinearScale", "size": 1316},
@@ -168,7 +123,7 @@
       ]
      },
      {
-      "name": "util",
+      "name": "Asia Pacific",
       "children": [
        {"name": "Arrays", "size": 8258},
        {"name": "Colors", "size": 10001},
@@ -213,10 +168,10 @@
       ]
      },
      {
-      "name": "vis",
+      "name": "Europe",
       "children": [
        {
-        "name": "axis",
+        "name": "Italy",
         "children": [
          {"name": "Axes", "size": 1302},
          {"name": "Axis", "size": 24593},
@@ -226,7 +181,7 @@
         ]
        },
        {
-        "name": "controls",
+        "name": "BeNeLux",
         "children": [
          {"name": "AnchorControl", "size": 2138},
          {"name": "ClickControl", "size": 3824},
@@ -242,7 +197,7 @@
         ]
        },
        {
-        "name": "data",
+        "name": "France",
         "children": [
          {"name": "Data", "size": 20544},
          {"name": "DataList", "size": 19788},
@@ -264,7 +219,7 @@
         ]
        },
        {
-        "name": "events",
+        "name": "Nordic",
         "children": [
          {"name": "DataEvent", "size": 2313},
          {"name": "SelectionEvent", "size": 1880},
@@ -273,7 +228,7 @@
         ]
        },
        {
-        "name": "legend",
+        "name": "CEE",
         "children": [
          {"name": "Legend", "size": 20859},
          {"name": "LegendItem", "size": 4614},
@@ -281,7 +236,7 @@
         ]
        },
        {
-        "name": "operator",
+        "name": "DACH",
         "children": [
          {
           "name": "distortion",
@@ -292,7 +247,7 @@
           ]
          },
          {
-          "name": "encoder",
+          "name": "UKI",
           "children": [
            {"name": "ColorEncoder", "size": 3179},
            {"name": "Encoder", "size": 4060},

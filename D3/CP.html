@@ -3,6 +3,25 @@
 <head>
 </head>
 <style>
+/* 
+Hier der CSS-Stuff für den Donut-Chart
+*/
+
+.arc text {
+  font: 12px sans-serif;
+  text-anchor: middle;
+  }
+.arc path {
+  stroke: #fff;
+  }
+arc2 text{
+  font: 10px sans-serif;
+  text-anchor: middle;
+  }
+arc2 path{
+  stroke: #fff;
+} 
+/* Hier der CSS-Stuff für Circle Packing */
 
 .node {
   fill: #050505;  
@@ -34,14 +53,85 @@
     background-color: rgb(5, 5, 5);
 }
 
+#area2 {
+  position: absolute;
+  top: 700px;
+  right: 200;
+  bottom: 50;
+  width: 500px;
+  height: 600px;
+  border: 3px solid #73AD21;
+}
 
+#toolbar {
+      cursor: pointer;
+      text-align: center;
+      font-size: 16px;
+      position: absolute;
+      padding: 30px 50px;
+      text-decoration: none;
+      top: 30%;
+      left: 60%;
+    }
 
+  .button.active {
+      background: #000;
+      color: #fff;
+    } 
 
-  
+  .tooltip {
+      position: absolute;
+      text-align: left;
+      padding: 5px;
+      font: 10px monospace;		
+      background-color: rgba(255, 255, 255, .95);
+      border: 1px solid lightgray;
+      pointer-events: none;	
+      width: 100px;
+    }
+
 
 </style>
+<div id="option">
+    <input name="updateButton" 
+        type="button" 
+        value="Q1 2018" 
+        onclick="update0()" />
+  <input name="updateButton" 
+         type="button" 
+         value="Q2 2018" 
+         onclick="update1()" />
+  <input name="updateButton" 
+         type="button" 
+         value="Q3 2018" 
+         onclick="update2()" />
+  <input name="updateButton" 
+         type="button" 
+         value="Q4 2018" 
+         onclick="update3()" />
+  <input name="revertButton" 
+         type="button" 
+         value="Q1 2019" 
+         onclick="resetData()" />
+</div>
+<div id="area1"></div> 
+ <div id="area2"></div> 
+
+<div id="toolbar">
+    <input name="First_Filter" type="button" class="button" value="First_filter"/>
+    <input name="Second_Filter" type="button" class="button" value="Second_filter"/>
+    <input name="Third_Filter" type="button" class="button" value="Third_filter"/>
+    <input name="Fourth_Filter" type="button" class="button" value="Fourth_filter"/>
+    <input name="Fifth_Filter" type="button" class="button" value="Fifth_filter"/>
+  </div>
+
+  <script type="text/javascript">
+    document.getElementById('toolbar').style.visibility='hidden';
+    </script>
+
 <svg width="960" height="960" viewBox="0 0 960 960" preserveAspectRatio="xMidYMid meet"></svg>
-<script language="javascript" type="text/javascript" src="file2.js"></script>
+<script language="javascript" type="text/javascript" src="detail_information.js"></script>
+<script language="javascript" type="text/javascript" src="donut_chart.js"></script>
 <script src="https://d3js.org/d3.v4.min.js"></script>
 <script>
 
@@ -109,7 +199,7 @@ var prevElem, prevColour;
 
 
         .on("mouseover", function(d){return tooltip.text(d.data.name).style("visibility", "visible");})
-		    .on("mousemove", function(d){return !d.children ? tooltip.style("top", (event.pageY-10)+"px").style("right",(event.pageX+10)+"px") : tooltip.style("top", "200px").style("right","300px");})
+		    .on("mousemove", function(d){return !d.children ? tooltip.style("top", (event.pageY-10)+"px").style("right",(event.pageX+10)+"px") : tooltip.style("top", "100px").style("right","600px");})
         .on("mouseout", function(){return tooltip.style("visibility", "hidden");});
 
 // Hier die Beschriftungen der Circles
@@ -131,12 +221,12 @@ var prevElem, prevColour;
       prevElem = d3.select(this);
       prevColour = d3.select(this).style("fill");
       d3.select(this).style("fill", "black"),d3.event.stopPropagation()});
-
+      var p = 500;
   zoomTo([root.x, root.y, root.r * 2 + margin]);
 
   function zoom(d) {
     var focus0 = focus; focus = d;
-
+ 
     var transition = d3.transition()
         .duration(d3.event.altKey ? 1 : 5)
         .tween("zoom", function(d) {
@@ -162,6 +252,9 @@ var prevElem, prevColour;
 // Code für Klasse Node--Leaf
 function check_class_node_leaf(){
   console.log('jo klappt')
+  show_buttons()
+  function show_buttons()
+    {document.getElementById("toolbar").style.visibility="visible";}
 
   // File2.js --> run alert
   alertOne()
@@ -171,5 +264,7 @@ function remove_viz_from_file2(){
   delete_viz()
 
 }
+//donut_chart()
+
 </script>
 </html>
