@@ -1,11 +1,11 @@
 function donut_chart(){
     var data = [
-        {name: "Europe", value: 40},
-        {name: "North America", value: 20},
-        {name: "Latin America", value: 30},
-        {name: "Japan", value: 10},
-        {name: "MEA", value: 10},
-        {name: "China", value: 10},
+        {name: "Europe", value: 1},
+        {name: "North America", value: 1},
+        {name: "Latin America", value: 1},
+        {name: "Japan", value: 1},
+        {name: "MEA", value: 1},
+        {name: "China", value: 1},
       ];
       var text = "";
       
@@ -38,62 +38,48 @@ function donut_chart(){
       .value(function(d) { return d.value; })
       .sort(null);
       
+      var arcOver = d3.arc().outerRadius(radius + 9);
+
       var path = g.selectAll('path')
       .data(pie(data))
       .enter()
       .append("g")
-      .on("mouseover", function(d) {
-            let g = d3.select(this)
-              .style("cursor", "pointer")
-              .style("fill", "black")
-              .append("g")
-              .transition()
-              .attr("r", 3 * 0.65)
-              .attr("class", "text-group");
-       
-            g.append("text")
-              .attr("class", "name-text")
-              .text(`${d.data.name}`)
-              .attr('text-anchor', 'middle');
-        
-            g.append("text")
-              .attr("class", "value-text")
-              .text(`${d.data.value}`)
-              .attr('text-anchor', 'middle')
-              .attr('dy', '.6em');
-          })
-        .on("mouseout", function(d) {
-            d3.select(this)
-              .style("cursor", "none")  
-              .style("fill", color(this._current))
-              .select(".text-group").remove();
-          })
         .append('path')
-        .style('stroke', 'white')
-        
+        .style('stroke', 'white')       
         .attr('d', arc)
         .attr('fill', (d,i) => color(i))
         .on("mouseover", function(d) {
             d3.select(this)     
               .style("cursor", "pointer")
-              .style("fill", "black");
+              .style("fill", "#8b0000")
+              .transition(400).ease(d3.easeBounce).duration(500).attr('d', arcOver.innerRadius(radius - thickness))
+              ;
           })
         .on("mouseout", function(d) {
             d3.select(this)
               .style("cursor", "none")  
-              .style("fill", color(this._current));
+              .style("fill", color(this._current))
+              .transition(400).ease(d3.easeBounce).duration(500).attr('d', arc)
+              ;
           })
         .each(function(a, i) { this._current = i; });
       
-        // Die Mitt des Donut-Charts
 
+       // Die Mitt des Donut-Charts
+        var ease = d3.easeBounceOut
+        var zweiter_radius = 58
         var centerSvg = svg2.append('circle')
-				.attr('fill','#a8a8a8')
-        .attr('r','62')
+				.attr('fill','#d3d3d3')
+        .attr('r',zweiter_radius)
         .attr("class", "labels")
         .attr('transform', 'translate(' + (width/2) + ',' + (height/2) + ')')
+        .on('mouseover', function(data){
+          d3.select(this).transition(400).attr("r",zweiter_radius * 1.15)})
+        .on('mouseout', function(data){
+          d3.select(this).transition(400).ease(d3.easeBounce).duration(500).attr("r",zweiter_radius)})
       
         
+
         svg2.selectAll("text.labels")
         .data(data)
         .enter()
@@ -103,6 +89,11 @@ function donut_chart(){
         .style('fill', 'black')
 				.style("font-size", "16px")
 				.style("font-weight", "bold")
-				.attr('transform', 'translate(' + (width/2) + ',' + (height/2) + ')')
+        .attr('transform', 'translate(' + (width/2) + ',' + (height/2) + ')')
+        .on("mouseover", function(){
+          d3.select(this).attr()
+        })
+
+
     
 }
