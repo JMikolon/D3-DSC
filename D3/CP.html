@@ -7,20 +7,7 @@
 Hier der CSS-Stuff für den Donut-Chart
 */
 
-.arc text {
-  font: 12px sans-serif;
-  text-anchor: middle;
-  }
-.arc path {
-  stroke: #fff;
-  }
-arc2 text{
-  font: 10px sans-serif;
-  text-anchor: middle;
-  }
-arc2 path{
-  stroke: #fff;
-} 
+
 /* Hier der CSS-Stuff für Circle Packing */
 
 .node {
@@ -55,12 +42,12 @@ arc2 path{
 
 #area2 {
   position: absolute;
-  top: 700px;
-  right: 200;
+  top: 20px;
+  right: 0px;
   bottom: 50;
-  width: 500px;
-  height: 600px;
-  border: 3px solid #73AD21;
+  width: 700px;
+  height: 800px;
+ /* border: 3px solid #73AD21; */
 }
 
 #toolbar {
@@ -186,7 +173,7 @@ var prevElem, prevColour;
 
 
     .on("dblclick", function(){zoom(root);if(prevElem){prevElem.style("fill", prevColour);};
-      prevElem = d3.select(this);
+      prevElem = d3.select("this");
       prevColour = d3.select(this).style("fill"),window.getSelection().removeAllRanges();remove_viz_from_file2()})
     .on("click", function(d) { if (focus !== d) zoom(d), d3.event.stopPropagation();if(prevElem){prevElem.style("fill", prevColour);};
       prevElem = d3.select(this);
@@ -199,7 +186,7 @@ var prevElem, prevColour;
 
 
         .on("mouseover", function(d){return tooltip.text(d.data.name).style("visibility", "visible");})
-		    .on("mousemove", function(d){return !d.children ? tooltip.style("top", (event.pageY-10)+"px").style("right",(event.pageX+10)+"px") : tooltip.style("top", "100px").style("right","600px");})
+		    .on("mousemove", function(d){return !d.children ? tooltip.style("top", (event.pageY-10)+"px").style("right",(event.pageX+100)+"px") : tooltip.style("top", "100px").style("right","900px");})
         .on("mouseout", function(){return tooltip.style("visibility", "hidden");});
 
 // Hier die Beschriftungen der Circles
@@ -264,7 +251,10 @@ function remove_viz_from_file2(){
   delete_viz()
 
 }
-//donut_chart()
+donut_chart()
+
+
+
 
 </script>
 </html>
